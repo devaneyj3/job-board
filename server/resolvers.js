@@ -27,12 +27,11 @@ export const resolvers = {
 		},
 	},
 	Mutation: {
-		createJob: (_root, { input: { title, description } }, { auth }) => {
-			if (!auth) {
+		createJob: (_root, { input: { title, description } }, { user }) => {
+			if (!user) {
 				throw new unathorizedError("Missing Authentication");
 			}
-			const companyId = "FjcJCHJALA4i";
-			return createJob({ companyId, title, description });
+			return createJob({ companyId: user.companyId, title, description });
 		},
 		deleteJob: (_root, { id }) => {
 			return deleteJob(id);
