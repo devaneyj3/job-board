@@ -1,5 +1,5 @@
-import { GraphQLClient, gql } from "graphql-request";
-import { ApolloClient, gpl, InMemoryCache } from "@apollo/client";
+import { GraphQLClient } from "graphql-request";
+import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { getAccessToken } from "../auth";
 
 const client = new GraphQLClient("http://localhost:9000/graphql", {
@@ -57,7 +57,7 @@ export async function getJob(id) {
 			}
 		}
 	`;
-	const data = await client.request(query, { id });
+	const { data } = await apolloClient.query({ query, variable: { id } });
 	return data.job;
 }
 export async function getCompany(id) {
@@ -76,7 +76,7 @@ export async function getCompany(id) {
 			}
 		}
 	`;
-	const data = await client.request(query, { id });
+	const { data } = await apolloClient.query({ query, variable: { id } });
 	return data.company;
 }
 export async function getJobs() {
@@ -93,6 +93,6 @@ export async function getJobs() {
 			}
 		}
 	`;
-	const data = await client.request(query);
+	const { data } = await apolloClient.query({ query });
 	return data.jobs;
 }
