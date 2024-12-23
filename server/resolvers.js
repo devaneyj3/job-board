@@ -17,7 +17,7 @@ export const resolvers = {
 			}
 			return job;
 		},
-		jobs: () => getJobs(),
+		jobs: (_root, { limit }) => getJobs(limit),
 		company: async (_root, { id }) => {
 			const company = await getCompany(id);
 			if (!company) {
