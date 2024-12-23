@@ -3,6 +3,7 @@ import { getCompany } from "./db/companies.js";
 import {
 	createJob,
 	deleteJob,
+	getCount,
 	getJob,
 	getJobs,
 	getJobsByCompany,
@@ -17,7 +18,15 @@ export const resolvers = {
 			}
 			return job;
 		},
-		jobs: (_root, { limit, offset }) => getJobs(limit, offset),
+		jobs: async (_root, { limit, offset }) => {
+			const items = await getJobs(limit, offset);
+			const totalCount = await getCount();
+
+			return {
+				items,
+				totalCount: totalCount,
+			};
+		},
 		company: async (_root, { id }) => {
 			const company = await getCompany(id);
 			if (!company) {
