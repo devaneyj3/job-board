@@ -16,8 +16,9 @@ export function useCompany(id) {
 		error: Boolean(error),
 	};
 }
-export function useJobs() {
+export function useJobs(limit, offset) {
 	const { data, loading, error } = useQuery(getJobsQuery, {
+		variables: { limit, offset },
 		fetchPolicy: "network-only",
 	});
 	return {
